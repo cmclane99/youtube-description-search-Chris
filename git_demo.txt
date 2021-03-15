@@ -1,0 +1,1 @@
+This file will be used for the Git Exercise 2 assignment to demonstrate git concepts.
