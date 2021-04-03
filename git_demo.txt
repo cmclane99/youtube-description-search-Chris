@@ -1,3 +1,0 @@
-This file will be used for the Git Exercise 2 assignment to demonstrate git concepts.
-
-This change was made in test-branch3.
