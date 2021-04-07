@@ -10,14 +10,14 @@ service = build("youtube", "v3", developerKey=api_key)
 
 def search(query_term, max_page_cnt):
     result_list = []
-    results = service.search().list(part='snippet', q=query_term,  maxResults=50).execute()
+    results = service.search().list(part='snippet', type="video", q=query_term,  maxResults=50).execute()
     # print(results['pageInfo'])
     result_list.extend(results['items'])      
         
     page_limit = 0
     while results['nextPageToken'] and page_limit < max_page_cnt:
         nextPageToken=results['nextPageToken']
-        results = service.search().list(part='snippet', q=query_term, maxResults=50, pageToken=nextPageToken).execute()
+        results = service.search().list(part='snippet', type="video", q=query_term, maxResults=50, pageToken=nextPageToken).execute()
         result_list.extend(results['items'])
         page_limit += 1
 
