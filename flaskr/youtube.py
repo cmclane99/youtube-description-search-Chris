@@ -40,6 +40,9 @@ def search(query_term, max_page_cnt):
         result_list.extend(video_list)
         page_limit += 1
 
+    with open('youtube_search_' + query_term +'.json', 'w', encoding='utf-8') as f:
+        json.dump(result_list, f, ensure_ascii=False, indent=4)
+
     return result_list
 
 # Check if the script is being called from the terminal
