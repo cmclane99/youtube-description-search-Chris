@@ -3,11 +3,18 @@
         <title>Proper Title</title>
     </head>
     <body>
+        <form action="/query?q={{ query_term }}" method="POST">
+            <input name="description_search" placeholder="search here", type="text" value="">
+            <input type="submit" value="search">
+        </form>
+
+        <p>Query</p>
+
         {% if data is defined %}
             <ol>
             {% for item in data %}
                 <li>{{ item['snippet']['title'] }}
-                    <br/> {{ item['snippet']['description'] }}
+                    <br/> <span> {{ item['snippet']['description'] | safe }} </span>
                     <br/> <a href="https://www.youtube.com/watch?v={{ item['id']['videoId'] }}" target='_blank'>Youtube Link</a> 
                 </li>
             {% endfor %}

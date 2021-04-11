@@ -9,20 +9,41 @@ cse_id = config.cse_id
 service = build("youtube", "v3", developerKey=api_key)
 
 def search(query_term, max_page_cnt):
+    def get_video_info(video_id):
+        result = service.videos().list(part='snippet', id=video_id).execute()
+        try:
+            return result['items'][0]
+        except:
+            return None
+    
+    def get_video_list(search_results):
+        video_list = []
+        for item in search_results['items']:
+            video_id = item['id']['videoId']
+            video_info = get_video_info(video_id)
+            if video_info:
+                video_list.append(video_info)
+        
+        return video_list
+
     result_list = []
-    results = service.search().list(part='snippet', q=query_term,  maxResults=50).execute()
+    results = service.search().list(part='snippet', type="video", q=query_term,  maxResults=50).execute()
     # print(results['pageInfo'])
-    result_list.extend(results['items'])      
+    video_list = get_video_list(results)
+    result_list.extend(video_list)      
         
     page_limit = 0
     while results['nextPageToken'] and page_limit < max_page_cnt:
         nextPageToken=results['nextPageToken']
-        results = service.search().list(part='snippet', q=query_term, maxResults=50, pageToken=nextPageToken).execute()
-        result_list.extend(results['items'])
+        results = service.search().list(part='snippet', type="video", q=query_term, maxResults=50, pageToken=nextPageToken).execute()
+        video_list = get_video_list(results)
+        result_list.extend(video_list)
         page_limit += 1
 
+    with open('youtube_search_' + query_term +'.json', 'w', encoding='utf-8') as f:
+        json.dump(result_list, f, ensure_ascii=False, indent=4)
+
     return result_list
-   
 
 # Check if the script is being called from the terminal
 if __name__=='__main__':
