@@ -1,3 +1,9 @@
+flaskr/config.py
+flaskr/whoosh_index_*
+
+# ignore json data files in flaskr
+flaskr/*.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
