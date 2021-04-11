@@ -29,3 +29,23 @@ def create_whoosh_index(video_list, index_name):
     
     writer.commit()
 
+def query_on_whoosh(index_name, query_str):
+    query_str = stem(query_str)     # transforms words to their simplest form (eg. pandas -> panda, learning -> learn)
+    index = open_dir(index_name)
+    with index.searcher(weighting=scoring.Frequency) as searcher:
+        query = QueryParser("description", index.schema).parse(query_str)
+        results = searcher.search(query, limit=None)
+
+        formatted_results = []
+        for result in results:
+            d = {}
+            d['url'] = "https://www.youtube.com/watch?v=" + result['id']
+            d['snippet'] = {}
+            d['snippet']['title'] = result['title']
+            d['snippet']['description'] = result.highlights('description')
+            d['id'] = {}
+            d['id']['videoId'] = result['id']
+            d['score'] = result.score
+            formatted_results.append(d)
+
+    return formatted_results
