@@ -10,3 +10,8 @@ To run the repo:
     - source env/bin/activate
     - pip install -r requirements.txt
 3. run the app: flask run --host 0.0.0.0
+
+## Set up selenium
+
+### Download chromdriver
+Download the chrome driver with the proper verion and put it (the executable file, not the zip file or folder) to tests/.
