@@ -13,5 +13,5 @@ To run the repo:
 
 ## Set up selenium
 
-### Download chromdriver
+### Download chromedriver
 Download the chrome driver with the proper verion and put it (the executable file, not the zip file or folder) to tests/.
