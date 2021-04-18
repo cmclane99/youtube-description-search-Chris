@@ -1,3 +1,6 @@
+tests/chromedriver.exe
+tests/test_env
+
 flaskr/config.py
 flaskr/whoosh_index_*
 
