@@ -36,6 +36,7 @@ def query():
     if request.method == 'POST':
         # the result sent by the search box on the query page
         search_term = request.form['description_search']
+
         print(search_term)
         results = query_on_whoosh(index_name, search_term)
         return render_template("query.html", query_term=arg, data=results)
