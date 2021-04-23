@@ -16,11 +16,9 @@ app = Flask(__name__)
 # example: google.com/search
 @app.route("/")
 def index(): # method name doesn't matter to Flask
-    username = request.args.get('user')
-    if not username or not username.strip():
-        username = "World"
+    heading = "Youtube Description Search"
 
-    return render_template("index.html", user=username)
+    return render_template("index.html", user=heading)
 
 @app.route("/query", methods=['GET', 'POST'])
 def query():
