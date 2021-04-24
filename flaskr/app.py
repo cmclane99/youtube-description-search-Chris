@@ -51,7 +51,7 @@ def query():
 
         print(search_term)
         results = query_on_whoosh(index_name, search_term)
-        return render_template("query.html", query_term=arg, data=results, description_search=True)
+        return render_template("query.html", query_term=arg, search_term=search_term, data=results, description_search=True)
 
 
 
