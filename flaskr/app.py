@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template
 from youtube import search
 from description_search import create_whoosh_index, query_on_whoosh
+import json
+
+import os
 
 print("The variable __name__: ")
 print(__name__)
@@ -29,9 +32,16 @@ def query():
     index_name = "whoosh_index_" + arg
 	
     if request.method == 'GET':
-        results = search(arg, 1)
-        create_whoosh_index(results, index_name)
+        filename = "youtube_search_" + arg + ".json"
+        if os.path.exists(filename):
+            f = open(filename)
+            results = json.load(f)
+        else:
+            results = search(arg, 1)
+            create_whoosh_index(results, index_name)
+        
         return render_template("query.html", query_term=arg, data=results)
+
 
     if request.method == 'POST':
         # the result sent by the search box on the query page
@@ -40,3 +50,7 @@ def query():
         print(search_term)
         results = query_on_whoosh(index_name, search_term)
         return render_template("query.html", query_term=arg, data=results)
+
+
+        
+
