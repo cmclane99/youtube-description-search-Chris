@@ -20,7 +20,7 @@ app = Flask(__name__)
 @app.route("/")
 def index(): # method name doesn't matter to Flask
     heading = "Youtube Description Search"
-
+    
     return render_template("index.html", user=heading)
 
 @app.route("/query", methods=['GET', 'POST'])
@@ -32,14 +32,16 @@ def query():
     index_name = "whoosh_index_" + arg
 	
     if request.method == 'GET':
+
         filename = "youtube_search_" + arg + ".json"
         if os.path.exists(filename):
+            # Pull data from an existing JSON file
             f = open(filename)
             results = json.load(f)
         else:
             results = search(arg, 1)
             create_whoosh_index(results, index_name)
-        
+
         return render_template("query.html", query_term=arg, data=results)
 
 
@@ -49,7 +51,8 @@ def query():
 
         print(search_term)
         results = query_on_whoosh(index_name, search_term)
-        return render_template("query.html", query_term=arg, data=results)
+        return render_template("query.html", query_term=arg, data=results, description_search=True)
+
 
 
         
