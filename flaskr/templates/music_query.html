@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Youtube Descripton Search - Music</title>
+    </head>
+    <body>
+        <h1 style = "font-size: 30px"><b>Youtube Description Search - Music</b></h1>
+
+        <a href="./">Home</a>
+            
+        {% if data is defined %}
+            <ol>
+            {% for item in data %}
+                <li class="youtube-video">{{ item['snippet']['title'] }}
+                    <br/> <span> {{ item['snippet']['description'] | safe }} </span>
+                    <br/> <a href="https://www.youtube.com/watch?v={{ item['id']['videoId'] }}" target='_blank'>Youtube Link</a>
+                </li>
+            {% endfor %}
+        {% else %} 
+            <p>No search results</p>
+        {% endif %}    
+        </ol>
+    </body>
+</html>

@@ -39,7 +39,7 @@ def query():
             f = open(filename)
             results = json.load(f)
         else:
-            results = search(arg, 1)
+            results = search(arg, 1, False)
             create_whoosh_index(results, index_name)
 
         return render_template("query.html", query_term=arg, data=results)
@@ -53,7 +53,24 @@ def query():
         results = query_on_whoosh(index_name, search_term)
         return render_template("query.html", query_term=arg, search_term=search_term, data=results, description_search=True)
 
+@app.route("/music_query", methods=['GET'])
+def music_query():
+    arg = request.args.get('q')
+    if not arg or not arg.strip():
+        render_template("music_query.html")
 
+    index_name = "whoosh_index_"+ arg +".json"
 
+    if request.method == 'GET':
         
+        filename = "youtube_music_search_"+ arg +".json"
+        if os.path.exists(filename):
+            f = open(filename)
+            results = json.load(f)
+        else:
+            results = search(arg, 1, True)
+            create_whoosh_index(results, index_name)
+
+        return render_template("music_query.html", query_term=arg, data=results)
+         
 
