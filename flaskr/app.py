@@ -83,7 +83,7 @@ def music_query():
             results = json.load(f)
             checked = False
         
-        return render_template("music_query.html", query_term=arg, data=results)
+        return render_template("music_query.html", query_term=arg, data=results, spotify=checked)
 
         
 

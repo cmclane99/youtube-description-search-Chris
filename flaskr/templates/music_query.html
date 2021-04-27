@@ -17,7 +17,12 @@
             {% for item in data %}
                 <li class="youtube-video">{{ item['snippet']['title'] }}
                     <br/> <span> {{ item['snippet']['description'] | safe }} </span>
-                    <br/> <a href="https://www.youtube.com/watch?v={{ item['id'] }}" target='_blank'>Youtube Link</a>
+                    {% if spotify == true %}
+                        <br/> <a href="https://www.youtube.com/watch?v={{ item['id']['videoId'] }}" target='_blank'>Youtube Link</a>
+                        <br/> <iframe width="420" height="315" frameborder="0" src="https://www.youtube.com/embed/{{ item['id']['videoId'] }}"></iframe> 
+                    {% else %}
+                        <br/> <a href="https://www.youtube.com/watch?v={{ item['id'] }}" target='_blank'>Youtube Link</a>
+                    {% endif %}
                 </li>
             {% endfor %}
         {% else %} 
