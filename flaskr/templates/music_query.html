@@ -7,7 +7,11 @@
 
         <a href="./">Home</a>
         <form action="/music_query?q={{ query_term }}" method="POST">
-            <input name="spotify_filter" id="spotify_filter" type="checkbox" value="spotify">
+            {% if spotify == true %}
+                <input name="spotify_filter" type="checkbox" value="spotify" checked="true">
+            {% else %}
+                <input name="spotify_filter" type="checkbox" value="spotify">
+            {% endif %}
             <label for="spotify_filter">Spotify-filtered</label>
             <input type="submit" value="submit">
         </form>
