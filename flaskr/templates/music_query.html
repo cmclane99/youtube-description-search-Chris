@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Youtube Descripton Search - Music</title>
+    </head>
+    <body>
+        <h1 style = "font-size: 30px"><b>Youtube Description Search - Music</b></h1>
+
+        <a href="./">Home</a>
+        <form action="/music_query?q={{ query_term }}" method="POST">
+            <input name="spotify_filter" id="spotify_filter" type="checkbox" value="spotify">
+            <label for="spotify_filter">Spotify-filtered</label>
+            <input type="submit" value="submit">
+        </form>
+            
+        {% if data is defined %}
+            <ol>
+            {% for item in data %}
+                <li class="youtube-video">{{ item['snippet']['title'] }}
+                    <br/> <span> {{ item['snippet']['description'] | safe }} </span>
+                    <br/> <a href="https://www.youtube.com/watch?v={{ item['id'] }}" target='_blank'>Youtube Link</a>
+                </li>
+            {% endfor %}
+        {% else %} 
+            <p>No search results</p>
+        {% endif %}    
+        </ol>
+    </body>
+</html>
